@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <p>HelloWorld</p>
     <v-row class="text-center">
       <v-col cols="12">
         <v-img
