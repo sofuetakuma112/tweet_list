@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <v-app-bar app fixed height="100px">
+      <SearchForm />
+    </v-app-bar>
     <v-main>
       <ListDisplay />
     </v-main>
@@ -8,12 +11,14 @@
 
 <script>
 import ListDisplay from "./components/ListDisplay";
+import SearchForm from "./components/SearchForm";
 
 export default {
   name: "App",
 
   components: {
-    ListDisplay
+    ListDisplay,
+    SearchForm
   },
 
   data: () => ({})
