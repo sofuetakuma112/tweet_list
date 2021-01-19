@@ -1,16 +1,16 @@
 # tweet_list
 
-## Project setup
+## セットアップ
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 内部サーバー立ち上げ
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### ビルド
 ```
 npm run build
 ```
