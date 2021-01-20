@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app fixed height="100px">
+    <v-app-bar app fixed height="80px">
       <SearchForm />
     </v-app-bar>
     <v-main>
