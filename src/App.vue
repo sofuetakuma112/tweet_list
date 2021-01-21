@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <ListDisplay />
+      <ListDisplay :listId="tweetList.id" />
     </v-main>
   </v-app>
 </template>
@@ -13,9 +13,9 @@ export default {
   name: "App",
 
   components: {
-    ListDisplay
+    ListDisplay,
   },
 
-  data: () => ({})
+  data: () => ({}),
 };
 </script>
