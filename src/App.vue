@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <ListDisplay :listId="tweetList.id" />
+      <ListDisplay />
     </v-main>
   </v-app>
 </template>
