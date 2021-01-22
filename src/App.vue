@@ -21,6 +21,6 @@ export default {
     SearchForm
   },
 
-  data: () => ({})
+  data: () => ({}),
 };
 </script>
