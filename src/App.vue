@@ -4,6 +4,7 @@
       <SearchForm />
     </v-app-bar>
     <v-main>
+      <LandingPage />
       <ListDisplay />
     </v-main>
   </v-app>
@@ -12,13 +13,15 @@
 <script>
 import ListDisplay from "./components/ListDisplay";
 import SearchForm from "./components/SearchForm";
+import LandingPage from "./components/LandingPage";
 
 export default {
   name: "App",
 
   components: {
     ListDisplay,
-    SearchForm
+    SearchForm,
+    LandingPage
   },
 
   data: () => ({}),
