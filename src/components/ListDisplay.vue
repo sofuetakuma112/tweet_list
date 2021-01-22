@@ -36,8 +36,11 @@
 export default {
   data: () => ({
     tweetList: [
-      { listTitle: "リスト1", img: "km353344929401120215315.jpg" },
-      { listTitle: "リスト2", img: "DSC08931.jpg" },
+      {
+        listTitle: "リスト1",
+        img: require("@/assets/image/km353344929401120215315.jpg"),
+      },
+      { listTitle: "リスト2", img: require("@/assets/image/DSC08931.jpg") },
       { listTitle: "リスト3", img: "" },
       { listTitle: "リスト4", img: "" },
       { listTitle: "リスト5", img: "" },
