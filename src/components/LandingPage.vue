@@ -17,7 +17,9 @@
       >
       </v-img>
     </div>
-    <div style="background-color: #4e454a"></div>
+    <div style="background-color: #4e454a">
+      <p>This app has these functions.</p>
+    </div>
   </v-container>
 </template>
 
