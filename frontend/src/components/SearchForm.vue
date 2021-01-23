@@ -9,7 +9,9 @@
       rounded
       append-outer-icon="mdi-magnify"
       @click:append-outer="searchTweet()"
+      @keyup.enter="searchTweet()"
     ></v-text-field>
+
     <v-dialog v-model="search" width="60%">
       <v-card>
         <v-card-title>
