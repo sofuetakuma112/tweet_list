@@ -9,11 +9,8 @@ cd
 # appブランチをリモートからcloneする
 git clone -b app https://github.com/sofuetakuma112/tweet_list.git
 
-# ディレクトリ移動
-cd tweet_list
-
 # backendディレクトリに移動
-cd backend
+cd tweet_list/backend
 
 # package.jsonからdependenciesをインストール
 npm install
@@ -29,10 +26,11 @@ cd && cd tweet_list/frontend
 # package.jsonからdependenciesをインストール
 npm install
 
-# localhost:8080で開発サーバーを立ち上げ
+# localhost:8080で開発サーバー起動
 npm run dev
 
 # localhost:8080へアクセス
+http://localhost:8080
 ```
 
 ## 参考記事
