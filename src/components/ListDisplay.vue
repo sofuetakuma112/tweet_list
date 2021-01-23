@@ -38,13 +38,13 @@ export default {
     tweetList: [
       {
         listTitle: "リスト1",
-        img: require("@/assets/image/km353344929401120215315.jpg"),
+        img: require("@/assets/image/km353344929401120215315.jpg")
       },
       { listTitle: "リスト2", img: require("@/assets/image/DSC08931.jpg") },
       { listTitle: "リスト3", img: "" },
       { listTitle: "リスト4", img: "" },
       { listTitle: "リスト5", img: "" },
-      { listTitle: "リスト6", img: "" },
+      { listTitle: "リスト6", img: "" }
     ],
     backgroundColors: [
       "#a0d8ef",
@@ -53,18 +53,17 @@ export default {
       "#68a4d9",
       "#00a1e9",
       "#0075c2",
-      "#00afcc",
-    ],
+      "#00afcc"
+    ]
   }),
   methods: {
     showListDetails() {
-      console.log("HelloWorld");
+      this.$emit("change-component", "ListDetails");
     },
     randomColor() {
       const rnd = Math.floor(Math.random() * this.backgroundColors.length);
       return this.backgroundColors[rnd];
-    },
-  },
+    }
+  }
 };
 </script>
-  
