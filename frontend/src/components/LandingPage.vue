@@ -18,10 +18,7 @@
           style="position: absolute; top: 12px; right: 30px"
         ></v-img>
       </div>
-      <v-btn @click="$router.push('top')" class="ma-5" elevation="2"
-        >Login</v-btn
-      >
-      <v-btn class="ma-3" elevation="2" @click="doLogin">Login</v-btn>
+      <v-btn class="ma-5" elevation="2" @click="doLogin">Login</v-btn>
       <v-img
         :src="require('@/assets/image/LpTopImage1.png')"
         :aspect-ratio="16 / 9"
@@ -59,6 +56,7 @@
 
 <script>
 import firebase from "../firebase";
+import router from "../router";
 export default {
   data: () => ({
     works: [
@@ -74,7 +72,7 @@ export default {
   }),
   methods: {
     doLogin() {
-      firebase.login();
+      firebase.login().then(() => {router.push('top');});
     },
   },
 };

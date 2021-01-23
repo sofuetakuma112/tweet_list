@@ -19,7 +19,7 @@ export default {
   },
   login() {
     const provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithPopup(provider);
+    return firebase.auth().signInWithPopup(provider);
   },
   logout() {
     firebase.auth().signOut()
