@@ -44,7 +44,10 @@ export default {
     savelist: {
       type: Boolean,
       default: false
-    }
+    },
+    tweetAddList: {
+      type: Object,
+    },
   },
   data: () => ({
     contents: [
