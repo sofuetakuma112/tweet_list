@@ -5,6 +5,16 @@ import router from './router';
 import store from './store';
 import firebase from './firebase';
 
+import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
+import * as rules from 'vee-validate/dist/rules';
+
+Object.keys(rules).forEach(rule => {
+  extend(rule, rules[rule]);
+});
+
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
+
 // Vue.config.productionTip = false
 
 // console.log(firebaseConfig);
