@@ -21,8 +21,6 @@ app.post('/test', function(req, res) {
       res.send({
         tweet: tweets,
       })
-    } else {
-      console.log(error);
     }
   });
 })
