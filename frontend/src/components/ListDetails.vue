@@ -1,29 +1,46 @@
 <template>
-  <v-container-fuild>
-    <v-card flat outlined height="100px" v-for="item in items" :key="item.list">
-      <div class="text-center pt-5">
-        <p>ツイートの内容</p>
-        {{ item.list }}
+  <v-container fuild>
+    <template v-if="tweetList.tweetIds.length > 0">
+      <v-card flat outlined height="100px" v-for="tweet in tweets" :key="tweet.id">
+        <TwitterCard :tweet="tweet" />
+      </v-card>
+    </template>
+    <template v-else>
+      <div>
+        リストに追加されたツイートはありません
       </div>
-    </v-card>
-  </v-container-fuild>
+    </template>
+  </v-container>
 </template>
 
 <script>
+import TwitterCard from './TwitterCard';
+import firebase from '../firebase'
+
 export default {
-  data: () => ({
-    items: [
-      { list: "リスト1" },
-      { list: "リスト2" },
-      { list: "リスト3" },
-      { list: "リスト4" },
-      { list: "リスト5" },
-      { list: "リスト6" },
-      { list: "リスト7" },
-      { list: "リスト8" },
-      { list: "リスト9" },
-      { list: "リスト10" }
-    ]
-  })
+  components: {
+    TwitterCard,
+  },
+  data() {
+    return {
+      tweets: []
+    }
+  },
+  props: {
+    tweetList: {
+      type: Object,
+    }
+  },
+  created() {
+    this.tweetList.tweetIds.forEach(id => {
+      firebase.db()
+          .collection('tweets')
+          .doc(String(id))
+          .get()
+          .then(doc => {
+            this.tweets.push(doc.data().tweet)
+          })
+    });
+  },
 };
 </script>

@@ -25,7 +25,7 @@
       <v-container>
         <v-row no-gutters class="flex-row flex-nowrap overflow-auto">
           <v-col cols="4" v-for="list in filteredTweetLists" :key="list.id">
-            <v-card height="100px">{{ list.listName }}</v-card>
+            <v-card height="100px" @click="addTweetToList(list)">{{ list.listName }}</v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -71,8 +71,28 @@ export default {
             });
           }
         });
-        console.log(this.filteredTweetLists);
       });
+  },
+  methods: {
+    // リストにツイートのIDを格納
+    addTweetToList(list) {
+      firebase.db()
+        .collection('tweet_lists')
+        .doc(list.id)
+        .update({ // リストに追加するツイートのIDを配列に追加
+          tweetIds: firebase.arrayUnion(this.tweetAddList.id)
+        });
+      this.saveTweet()
+    },
+    // ツイートの保存
+    saveTweet() {
+      firebase.db().collection('tweets')
+        .doc(String(this.tweetAddList.id))
+        .set({
+          tweet: this.tweetAddList,
+          tweetId: this.tweetAddList.id
+        });
+    },
   },
   components: {
     CreateList

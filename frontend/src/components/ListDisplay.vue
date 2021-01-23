@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="4" md="3" v-for="(list, index) in tweetList" :key="index">
+      <v-col cols="4" md="3" v-for="(list, index) in filteredTweetLists" :key="index">
         <v-hover v-slot="{ hover }">
           <v-card
             class="tweet-list mx-md-10 my-md-2 rounded-lg"
@@ -18,34 +18,25 @@
               class="rounded-lg"
             ></v-img>
             <v-overlay v-if="hover" absolute color="#1f1f1f">
-              <v-btn @click="showListDetails" text class="font-weight-bold"
+              <v-btn @click="showListDetails(list)" text class="font-weight-bold"
                 >See more list</v-btn
               >
             </v-overlay>
-          </v-card>
-        </v-hover>
-        <p class="text-center font-weight-medium my-md-4">
-          {{ list.listTitle }}
-        </p>
+            </v-card>
+          </v-hover>
+          <p class="text-center font-weight-medium my-md-4">
+            {{ list.listName }}
+          </p>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import firebase from '../firebase'
+
 export default {
   data: () => ({
-    tweetList: [
-      {
-        listTitle: "リスト1",
-        img: require("@/assets/image/km353344929401120215315.jpg")
-      },
-      { listTitle: "リスト2", img: require("@/assets/image/DSC08931.jpg") },
-      { listTitle: "リスト3", img: "" },
-      { listTitle: "リスト4", img: "" },
-      { listTitle: "リスト5", img: "" },
-      { listTitle: "リスト6", img: "" }
-    ],
     backgroundColors: [
       "#a0d8ef",
       "#1da1f1",
@@ -54,16 +45,44 @@ export default {
       "#00a1e9",
       "#0075c2",
       "#00afcc"
-    ]
+    ],
+    filteredTweetLists: [],
+    isShowListDetails: false,
+    dialog: false,
   }),
+  computed: {
+    user() {
+      return this.$store.getters.user
+    }
+  },
+  created() {
+    const that = this
+    firebase.db()
+      .collection("tweet_lists")
+      .get()
+      .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        if (doc.data().uid === that.user.uid) {
+          that.filteredTweetLists.push(doc.data())
+        }
+    });
+});
+  },
   methods: {
-    showListDetails() {
-      this.$emit("change-component", "ListDetails");
+    showListDetails(list) {
+      // this.isShowListDetails = true
+      this.$emit("change-component", {
+        view: "ListDetails",
+        tweetList: list
+      });
     },
     randomColor() {
       const rnd = Math.floor(Math.random() * this.backgroundColors.length);
       return this.backgroundColors[rnd];
-    }
+    },
+    changeDialogState(bool) {
+      this.dialog = bool;
+    },
   }
 };
 </script>

@@ -33,5 +33,8 @@ export default {
   },
   db() {
     return firebase.firestore();
+  },
+  arrayUnion(value) {
+    return firebase.firestore.FieldValue.arrayUnion(value);
   }
 };

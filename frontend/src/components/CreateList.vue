@@ -76,7 +76,8 @@ export default {
       firebase.db().collection('tweet_lists').add({
         uid: this.user.uid,
         listName: this.name,
-      });
+        tweetIds: []
+      })
       this.$emit('change-savenew', false);
     },
   }

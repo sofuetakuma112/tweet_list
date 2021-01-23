@@ -26,7 +26,7 @@
         </v-card-title>
       </v-card>
     </v-dialog>
-    <SaveList v-model="savelist" :value="tweetAddList" />
+    <SaveList v-model="savelist" :tweetAddList="tweetAddList" />
   </v-container>
 </template>
 
