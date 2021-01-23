@@ -1,10 +1,5 @@
 <template>
-  <v-card
-    class="mx-auto"
-    :color="tweet.user.profile_background_color"
-    dark
-    max-width="400"
-  >
+  <v-card class="mx-auto" :color="tweet.user.profile_background_color" dark>
     <v-card-title>
       <v-icon large left>
         mdi-twitter
@@ -12,8 +7,8 @@
       <span class="title font-weight-light">Twitter</span>
     </v-card-title>
 
-    <v-card-text class="headline font-weight-bold">
-      {{ tweet.text }}
+    <v-card-text class="body-1 font-weight-bold">
+      {{ tweetText }}
       <TwitterImg :tweet="tweet" :key="tweet.id" />
     </v-card-text>
 
@@ -32,6 +27,9 @@
         </v-list-item-content>
 
         <v-row align="center" justify="end">
+          <v-icon class="mr-1" @click="saveList">
+            mdi-plus
+          </v-icon>
           <v-icon class="mr-1">
             mdi-heart
           </v-icon>
@@ -52,6 +50,17 @@ export default {
   data: () => ({
     //
   }),
+  methods: {
+    saveList() {
+      this.$emit("save-list", this.tweet);
+    }
+  },
+  computed: {
+    tweetText() {
+      var del = this.tweet.text.substr(this.tweet.text.lastIndexOf("http"));
+      return this.tweet.text.replace(del, "");
+    }
+  },
   components: {
     TwitterImg
   },

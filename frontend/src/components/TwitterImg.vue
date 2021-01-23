@@ -1,10 +1,11 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row justify="center">
       <v-col
         :cols="cols"
         v-for="count in tweet.extended_entities.media.length"
         :key="count"
+        style="height: 300px;"
       >
         <v-img
           width="100%"
@@ -31,7 +32,7 @@ export default {
     cols: "6",
     selectedImage: null,
     dialog: false,
-    currentCount: "1"
+    currentCount: "0"
   }),
   props: {
     tweet: {
@@ -47,7 +48,7 @@ export default {
   },
   created() {
     if (this.tweet.extended_entities.media.length == 1) {
-      this.cols = "12";
+      this.cols = "9";
     }
   }
 };

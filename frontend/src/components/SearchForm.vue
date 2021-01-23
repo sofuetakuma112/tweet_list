@@ -12,21 +12,10 @@
       @keyup.enter="searchTweet()"
     ></v-text-field>
 
-    <v-dialog v-model="search" width="60%">
-      <v-card>
-        <v-card-title>
-          <template v-for="tweet in tweets">
-            <TwitterCard :tweet="tweet" :key="tweet.id" />
-            <v-icon
-              large
-              @click.stop="openSaveList(tweet)"
-              :key="`icon_${tweet.id}`"
-            >
-              mdi-plus
-            </v-icon>
-          </template>
-        </v-card-title>
-      </v-card>
+    <v-dialog v-model="search" width="65%">
+      <template v-for="tweet in tweets">
+        <TwitterCard :tweet="tweet" :key="tweet.id" @save-list="openSaveList" />
+      </template>
     </v-dialog>
     <SaveList v-model="savelist" :tweetAddList="tweetAddList" />
   </v-container>
