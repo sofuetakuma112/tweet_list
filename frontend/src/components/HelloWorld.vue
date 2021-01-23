@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <!-- ごちゃごちゃしていたのを全て消して、ボタンを配置 -->
+    <p>テスト</p>
     <button @click='post'>click me</button>
   </div>
 </template>
