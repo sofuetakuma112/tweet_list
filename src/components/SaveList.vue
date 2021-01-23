@@ -7,10 +7,7 @@
     persistent
   >
     <v-card v-if="savenew">
-      <v-icon large @click="savenew = false">
-        mdi-chevron-left
-      </v-icon>
-      <v-btn>保存</v-btn>
+      <CreateList @change-savenew="savenew = $event" />
     </v-card>
     <v-card outlined v-else>
       <div class="float-right pt-3">
@@ -36,6 +33,7 @@
   </v-dialog>
 </template>
 <script>
+import CreateList from "./CreateList";
 export default {
   model: {
     prop: "savelist",
@@ -58,7 +56,10 @@ export default {
       "リスト6"
     ],
     savenew: false
-  })
+  }),
+  components: {
+    CreateList
+  }
 };
 </script>
 
