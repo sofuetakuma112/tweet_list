@@ -6,10 +6,7 @@
     max-width="400"
   >
     <v-card-title>
-      <v-icon
-        large
-        left
-      >
+      <v-icon large left>
         mdi-twitter
       </v-icon>
       <span class="title font-weight-light">Twitter</span>
@@ -17,6 +14,7 @@
 
     <v-card-text class="headline font-weight-bold">
       {{ tweet.text }}
+      <TwitterImg :tweet="tweet" :key="tweet.id" />
     </v-card-text>
 
     <v-card-actions>
@@ -33,10 +31,7 @@
           <v-list-item-title>{{ tweet.user.name }}</v-list-item-title>
         </v-list-item-content>
 
-        <v-row
-          align="center"
-          justify="end"
-        >
+        <v-row align="center" justify="end">
           <v-icon class="mr-1">
             mdi-heart
           </v-icon>
@@ -52,15 +47,19 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      //
-    }),
-    props: {
-      tweet: {
-        type: Object,
-        required: true,
-      }
+import TwitterImg from "./TwitterImg";
+export default {
+  data: () => ({
+    //
+  }),
+  components: {
+    TwitterImg
+  },
+  props: {
+    tweet: {
+      type: Object,
+      required: true
     }
   }
+};
 </script>
