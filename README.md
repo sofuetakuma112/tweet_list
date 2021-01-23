@@ -27,7 +27,7 @@ cd && cd tweet_list/frontend
 npm install
 
 # localhost:8080で開発サーバー起動
-npm run dev
+npm run serve
 
 # localhost:8080へアクセス
 http://localhost:8080
