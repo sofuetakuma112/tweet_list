@@ -13,7 +13,7 @@ export default {
   methods: {
     // サーバーから返ってくる値をログに出力したいのでasyncとawaitを行う
     async post() {
-      let response = await Methods.fetchTweet(id);
+      let response = await Methods.fetchTweet('1352543093774376960');
       console.log(response);
     },
   },

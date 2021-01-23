@@ -18,7 +18,7 @@ app.post('/fetchTweet', function(req, res) {
   client.get('/statuses/lookup', { id: req.body.id }, function(error, tweets, response) {
     if (!error) {
       res.send({
-        tweet: tweets,
+        tweets,
       });
     } else if (error) {
       console.log(error);
