@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <!-- ごちゃごちゃしていたのを全て消して、ボタンを配置 -->
     <button @click='post'>click me</button>
   </div>
@@ -11,18 +10,13 @@ import Methods from '../api/methods'
 
 export default {
   name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  },
   methods: {
     // サーバーから返ってくる値をログに出力したいのでasyncとawaitを行う
     async post() {
-      let response = await Methods.testPosting()
-      console.log(response)
-    }
-  }
+      let response = await Methods.fetchTweet('1352543093774376960');
+      console.log(response);
+    },
+  },
 }
 </script>
 
