@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-0" fluid>
     <div class="light-blue lighten-2" align="center">
-      <div justify="center" style="position: relative;">
+      <div justify="center" style="position: relative">
         <h1
           class="font-weight-black pt-10 brown--text text--darken-4"
           style="font-size: 40px"
@@ -13,7 +13,7 @@
         </h3>
         <v-img
           :src="require('@/assets/image/LpTopImage2.png')"
-          :aspect-ratio="1/1"
+          :aspect-ratio="1 / 1"
           width="200"
           style="position: absolute; top: 12px; right: 30px"
         ></v-img>
@@ -21,6 +21,7 @@
       <v-btn @click="$router.push('top')" class="ma-5" elevation="2"
         >Login</v-btn
       >
+      <v-btn class="ma-3" elevation="2" @click="doLogin">Login</v-btn>
       <v-img
         :src="require('@/assets/image/LpTopImage1.png')"
         :aspect-ratio="16 / 9"
@@ -57,6 +58,7 @@
 </template>
 
 <script>
+import firebase from "../firebase";
 export default {
   data: () => ({
     works: [
@@ -70,6 +72,10 @@ export default {
       },
     ],
   }),
+  methods: {
+    doLogin() {
+      firebase.login();
+    },
+  },
 };
 </script>
-
