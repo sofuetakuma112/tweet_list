@@ -10,7 +10,16 @@
           width="100%"
           height="100%"
           :src="tweet.extended_entities.media[count - 1].media_url_https"
+          @click="enlargeImage(count - 1)"
         ></v-img>
+        <v-dialog v-model="dialog" fullscreen hide-overlay scrollable>
+          <v-card tile>
+            <v-img
+              :src="tweet.extended_entities.media[currentCount].media_url_https"
+              @click="dialog = false"
+            ></v-img>
+          </v-card>
+        </v-dialog>
       </v-col>
     </v-row>
   </v-container>
@@ -19,12 +28,21 @@
 <script>
 export default {
   data: () => ({
-    cols: "6"
+    cols: "6",
+    selectedImage: null,
+    dialog: false,
+    currentCount: "1"
   }),
   props: {
     tweet: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    enlargeImage(value) {
+      this.dialog = true;
+      this.currentCount = value;
     }
   },
   created() {

@@ -64,7 +64,7 @@ export default {
       }
     },
     async post() {
-      let response = await Methods.fetchTweet("1352543093774376960");
+      let response = await Methods.fetchTweet("1352782724478558208");
       return response;
     }
   }
