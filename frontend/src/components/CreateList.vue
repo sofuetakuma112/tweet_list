@@ -59,14 +59,25 @@
 </template>
 
 <script>
+import firebase from '../firebase'
+
 export default {
   data: () => ({
     openCreateListForm: false,
     name: '',
   }),
+  computed: {
+    user() {
+      return this.$store.getters.user
+    }
+  },
   methods: {
     saveNewList() {
-      //
+      firebase.db().collection('tweet_lists').add({
+        uid: this.user.uid,
+        listName: this.name,
+      });
+      this.$emit('change-savenew', false);
     },
   }
 };

@@ -58,13 +58,17 @@ export default {
     searchTweet() {
       if (this.message.length > 0) {
         this.search = true;
+        this.message = this.message.substr(
+          this.message.lastIndexOf("/") + 1,
+          19
+        );
         this.post().then(tweetData => {
           this.tweets = tweetData.data.tweets;
         });
       }
     },
     async post() {
-      let response = await Methods.fetchTweet("1352782724478558208");
+      let response = await Methods.fetchTweet(this.message);
       return response;
     }
   }

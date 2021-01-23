@@ -24,8 +24,8 @@
 
       <v-container>
         <v-row no-gutters class="flex-row flex-nowrap overflow-auto">
-          <v-col cols="4" v-for="content in contents" :key="content">
-            <v-card height="100px">{{ content }}</v-card>
+          <v-col cols="4" v-for="list in filteredTweetLists" :key="list.id">
+            <v-card height="100px">{{ list.listName }}</v-card>
           </v-col>
         </v-row>
       </v-container>
@@ -34,6 +34,8 @@
 </template>
 <script>
 import CreateList from "./CreateList";
+import firebase from "../firebase"
+
 export default {
   model: {
     prop: "savelist",
@@ -50,16 +52,28 @@ export default {
     },
   },
   data: () => ({
-    contents: [
-      "リスト1",
-      "リスト2",
-      "リスト3",
-      "リスト4",
-      "リスト5",
-      "リスト6"
-    ],
-    savenew: false
+    savenew: false,
+    filteredTweetLists: []
   }),
+  computed: {
+    user() {
+      return this.$store.getters.user
+    }
+  },
+  created() {
+    firebase.db().collection("tweet_lists").onSnapshot((querySnapshot) => {
+        this.filteredTweetLists = [];
+        querySnapshot.forEach((doc) => {
+          if (doc.data().uid === this.user.uid) {
+            this.filteredTweetLists.push({
+              ...doc.data(),
+              id: doc.id
+            });
+          }
+        });
+        console.log(this.filteredTweetLists);
+      });
+  },
   components: {
     CreateList
   }
