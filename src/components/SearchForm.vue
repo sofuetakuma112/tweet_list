@@ -14,50 +14,20 @@
       <v-card>
         <v-card-title
           >ツイート内容
-          <v-icon large @click="saveList"> mdi-plus </v-icon></v-card-title
+
+          <v-icon large @click.stop="openSaveList()">
+            mdi-plus
+          </v-icon></v-card-title
         >
       </v-card>
     </v-dialog>
-    <v-dialog
-      width="100%"
-      v-model="savelist"
-      content-class="list-item"
-      persistent
-    >
-      <v-card v-if="savenew"
-        ><v-icon large @click="savenew = false">
-          mdi-chevron-left
-        </v-icon>
-        <v-btn>保存</v-btn>
-      </v-card>
-      <v-card outlined v-else>
-        <div class="float-right pt-3">
-          <v-icon large @click="savenew = true"> mdi-plus </v-icon>
-        </div>
-        <div class="float-left pt-3">
-          <v-icon large @click="savelist = false"> mdi-chevron-left </v-icon>
-        </div>
-        <v-card-title class="justify-center">保存先 </v-card-title>
-
-        <v-divider></v-divider>
-
-        <v-container class="  overflow-x-auto">
-          <v-card
-            v-for="content in contents"
-            :key="content"
-            height="50px"
-            width="1500px"
-            flat
-            tile
-            >{{ content }}</v-card
-          >
-        </v-container>
-      </v-card>
-    </v-dialog>
+    <SaveList v-model="savelist" />
   </v-container>
 </template>
 
 <script>
+import SaveList from "./SaveList";
+
 export default {
   data: () => ({
     message: "",
@@ -71,19 +41,17 @@ export default {
       "リスト6"
     ],
     search: false,
-    savelist: false,
-    savenew: false,
-    dialog: false
+
+    savelist: false
   }),
   methods: {
-    sendMessage() {
-      this.dialog = true;
-      alert("1");
-    },
-    saveList() {
+    openSaveList() {
       this.search = false;
       this.savelist = true;
     }
+  },
+  components: {
+    SaveList
   }
 };
 </script>
