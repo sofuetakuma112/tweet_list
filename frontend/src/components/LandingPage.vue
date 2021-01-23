@@ -1,51 +1,79 @@
 <template>
   <v-container class="pa-0" fluid>
-    <div class="light-blue  lighten-2" align="center">
-      <v-row justify="center">
-        <h1 class="font-weight-black text-center pt-10 brown--text text--darken-4" style="font-size: 40px">
+    <div class="light-blue lighten-2" align="center">
+      <div justify="center" style="position: relative">
+        <h1
+          class="font-weight-black pt-10 brown--text text--darken-4"
+          style="font-size: 40px"
+        >
           Welcome to this application!
         </h1>
-      </v-row>
-      <v-btn class="ma-3" elevation="2" @click="doLogin">Login</v-btn>
-      <!-- <v-btn class="ma-3" elevation="2" @click="doLogout">Logout</v-btn> -->
+        <h3 class="pt-10">
+          Twitterで見つけた自分のお気に入りのツイートをまとめてコレクションしよう！
+        </h3>
+        <v-img
+          :src="require('@/assets/image/LpTopImage2.png')"
+          :aspect-ratio="1 / 1"
+          width="200"
+          style="position: absolute; top: 12px; right: 30px"
+        ></v-img>
+      </div>
+      <v-btn class="ma-5" elevation="2" @click="doLogin">Login</v-btn>
       <v-img
-        :src="require('@/assets/image/LpImage.png')"
+        :src="require('@/assets/image/LpTopImage1.png')"
         :aspect-ratio="16 / 9"
         width="500"
         class="pa-8"
       >
       </v-img>
     </div>
-    <div class="pa-6" style="background-color: #4e454a">
-      <p
-        class="brown--text text--lighten-5 text-center mb-0"
-        style="font-size: 20px"
+    <div style="background-color: #4e454a; height: 80px"></div>
+    <div align="center" style="background-color: #f8f5e9">
+      <h2
+        class="font-weight-bold pa-7 brown--text text--darken-4"
+        style="font-size: 35px"
       >
-        This app has these functions
-      </p>
-    </div>
-    <div style="background-color: #f8f5e9">
-      <v-row>
-        <v-col>
+        works
+      </h2>
+      <v-row justify="center">
+        <v-col cols="6" v-for="(work, index) in works" :key="index">
+          <v-img
+            :src="work.img"
+            :aspect-ratio="1 / 1"
+            width="250"
+            class="mx-auto"
+            style="background-color: white; border-radius: 50%"
+          ></v-img>
+          <p class="my-4" style="font-size: 20px">
+            {{ work.detail }}
+          </p>
         </v-col>
       </v-row>
-      <v-avatar>
-      </v-avatar>
+      <v-avatar> </v-avatar>
     </div>
   </v-container>
 </template>
 
 <script>
-import firebase from '../firebase';
-
+import firebase from "../firebase";
+import router from "../router";
 export default {
+  data: () => ({
+    works: [
+      {
+        img: require("@/assets/image/LpWorkIcon1.png"),
+        detail: "お気に入りのツイートをまとめたリストを作ることができます",
+      },
+      {
+        img: require("@/assets/image/LpWorkIcon2.png"),
+        detail: "自分で作ったお気に入りのツイートリストを公開できます",
+      },
+    ],
+  }),
   methods: {
     doLogin() {
-      firebase.login();
+      firebase.login().then(() => {router.push('top');});
     },
-    // doLogout() {
-    //   firebase.logout();
-    // },
   },
-}
+};
 </script>
