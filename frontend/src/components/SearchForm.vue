@@ -15,7 +15,11 @@
         <v-card-title>
           <template v-for="tweet in tweets">
             <TwitterCard :tweet="tweet" :key="tweet.id" />
-            <v-icon large @click.stop="openSaveList(tweet)" :key="`icon_${tweet.id}`">
+            <v-icon
+              large
+              @click.stop="openSaveList(tweet)"
+              :key="`icon_${tweet.id}`"
+            >
               mdi-plus
             </v-icon>
           </template>
@@ -29,12 +33,12 @@
 <script>
 import SaveList from "./SaveList";
 import TwitterCard from "./TwitterCard";
-import Methods from '../api/methods'
+import Methods from "../api/methods";
 
 export default {
   components: {
     SaveList,
-    TwitterCard,
+    TwitterCard
   },
   data: () => ({
     message: "",
@@ -52,15 +56,19 @@ export default {
     searchTweet() {
       if (this.message.length > 0) {
         this.search = true;
-        this.post().then((tweetData) => {
-          this.tweets = tweetData.data.tweets
-        })
+        this.message = this.message.substr(
+          this.message.lastIndexOf("/") + 1,
+          19
+        );
+        this.post().then(tweetData => {
+          this.tweets = tweetData.data.tweets;
+        });
       }
     },
     async post() {
-      let response = await Methods.fetchTweet('1352543093774376960');
+      let response = await Methods.fetchTweet(this.message);
       return response;
-    },
-  },
+    }
+  }
 };
 </script>
