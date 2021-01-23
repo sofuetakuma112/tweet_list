@@ -8,7 +8,9 @@
       <component
         :is="currentView"
         @change-component="ChangeDisplay"
+        v-if="currentView !== 'ListDetails'"
       ></component>
+      <ListDetails v-if="currentView === 'ListDetails'" :tweetList="tweetList" />
     </v-main>
   </div>
 </template>
@@ -28,11 +30,13 @@ export default {
   },
   data: () => ({
     currentView: "ListDisplay",
-    show: true
+    show: true,
+    tweetList: null
   }),
   methods: {
-    ChangeDisplay(value) {
-      this.currentView = value;
+    ChangeDisplay(object) {
+      this.currentView = object.view;
+      this.tweetList = object.tweetList;
       this.show = false;
     },
     ChangeSearchForm(value) {

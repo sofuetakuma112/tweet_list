@@ -52,15 +52,15 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      //
-    }),
-    props: {
-      tweet: {
-        type: Object,
-        required: true,
-      }
-    }
+
+export default {
+  props: {
+    tweet: {
+      required: true,
+    },
+  },
+  created() {
+    console.log(this.tweet)
   }
+}
 </script>
