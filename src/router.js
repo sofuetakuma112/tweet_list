@@ -5,13 +5,10 @@ import ListDisplay from "./components/ListDisplay"
 
 Vue.use(VueRouter)
 
-const routes = [
-  { path: '/', component: LandingPage },
-  { path: '/top', component: ListDisplay }
-]
-
-const router = new VueRouter({
-  routes: routes
-})
-
-export default router
+export default new VueRouter({
+  mode: "history",
+  routes: [
+    { path: "/", component: LandingPage },
+    { path: "/top", component: ListDisplay }
+  ]
+});
