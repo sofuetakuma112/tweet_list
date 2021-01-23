@@ -11,7 +11,48 @@
 
       <p class="pt-15 text-center">新規作成ファイル表示</p>
       <div class="text-center">
-        <v-btn>作成</v-btn>
+        <ValidationObserver
+            ref="observer"
+            v-slot="{ invalid }"
+          >
+            <ValidationProvider
+                v-slot="{ errors }"
+                name="Name"
+                rules="required|max:10"
+              >
+                <v-text-field
+                  v-model="name"
+                  :counter="10"
+                  :error-messages="errors"
+                  label="Name"
+                  required
+                  class="list-name"
+                ></v-text-field>
+              </ValidationProvider>
+              <!-- <ValidationProvider
+                v-slot="{ errors }"
+                rules="required"
+                name="checkbox"
+              >
+                <v-checkbox
+                  v-model="checkbox"
+                  :error-messages="errors"
+                  value="1"
+                  label="Option"
+                  type="checkbox"
+                  required
+                ></v-checkbox>
+              </ValidationProvider> -->
+
+              <v-btn
+                class="mr-4"
+                type="submit"
+                :disabled="invalid"
+                @click="saveNewList()"
+              >
+                作成
+              </v-btn>
+        </ValidationObserver>
       </div>
     </v-card>
   </div>
@@ -19,6 +60,21 @@
 
 <script>
 export default {
-  data: () => ({})
+  data: () => ({
+    openCreateListForm: false,
+    name: '',
+  }),
+  methods: {
+    saveNewList() {
+      //
+    },
+  }
 };
 </script>
+
+<style>
+.list-name {
+  max-width: 500px;
+  margin: 0 auto;
+}
+</style>
