@@ -9,6 +9,7 @@
         :is="currentView"
         @change-component="ChangeDisplay"
       ></component>
+      <LandingPage />
     </v-main>
   </v-app>
 </template>
@@ -18,6 +19,7 @@ import ListDisplay from "./components/ListDisplay";
 import SearchForm from "./components/SearchForm";
 import ListDetails from "./components/ListDetails";
 import ListHeader from "./components/ListHeader";
+import LandingPage from "./components/LandingPage";
 
 export default {
   name: "App",
@@ -26,7 +28,8 @@ export default {
     ListDisplay,
     SearchForm,
     ListDetails,
-    ListHeader
+    ListHeader,
+    LandingPage
   },
 
   data: () => ({

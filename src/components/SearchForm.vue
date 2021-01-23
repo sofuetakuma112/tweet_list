@@ -31,17 +31,7 @@ import SaveList from "./SaveList";
 export default {
   data: () => ({
     message: "",
-
-    contents: [
-      "リスト1",
-      "リスト2",
-      "リスト3",
-      "リスト4",
-      "リスト5",
-      "リスト6"
-    ],
     search: false,
-
     savelist: false
   }),
   methods: {
@@ -55,11 +45,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.list-item {
-  bottom: 0 !important;
-  position: absolute !important;
-  margin-bottom: 0 !important;
-}
-</style>
