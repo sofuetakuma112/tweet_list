@@ -61,13 +61,38 @@ export default {
     }
   },
   created() {
+    const that = this
     firebase.db().collection("tweet_lists").onSnapshot((querySnapshot) => {
         this.filteredTweetLists = [];
         querySnapshot.forEach((doc) => {
-          if (doc.data().uid === this.user.uid) {
-            this.filteredTweetLists.push({
-              ...doc.data(),
-              id: doc.id
+          const tweet_lists_doc = doc
+          const list = doc.data()
+          // 既にツイートをリストに追加している
+          if (list.tweetIds.length > 0 && list.uid === this.user.uid) {
+            for (const id of list.tweetIds) {
+              // console.log(id)
+              firebase.db()
+                .collection('tweets')
+                .doc(String(id))
+                .get()
+                .then(doc => {
+                  const tweetData = doc.data().tweet
+                  that.filteredTweetLists.push({
+                    ...list,
+                    id: tweet_lists_doc.id,
+                    thumbnailImg: tweetData.entities.media && tweetData.entities.media.length > 0
+                      ? tweetData.entities.media[0].media_url
+                      : null,
+                    listColor: tweetData.user.profile_background_color
+                    })
+                    // console.log(this.filteredTweetLists)
+                })
+                break;
+            }
+          } else if (list.tweetIds.length === 0 && list.uid === this.user.uid) {
+            that.filteredTweetLists.push({
+              ...list,
+              id: tweet_lists_doc.id
             });
           }
         });

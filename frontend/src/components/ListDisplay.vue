@@ -37,19 +37,12 @@ import firebase from '../firebase'
 
 export default {
   data: () => ({
-    backgroundColors: [
-      "#a0d8ef",
-      "#1da1f1",
-      "#6c9bd2",
-      "#68a4d9",
-      "#00a1e9",
-      "#0075c2",
-      "#00afcc"
-    ],
     filteredTweetLists: [],
     isShowListDetails: false,
     dialog: false,
     listWithThumbnail: [], // ごちゃまぜ
+    tweetLists: [],
+    isFound: false,
   }),
   computed: {
     user() {
@@ -58,7 +51,6 @@ export default {
   },
   created() {
     const that = this
-    const lists = []
 
     firebase.db()
       .collection("tweet_lists")
@@ -69,48 +61,10 @@ export default {
         if (doc.data().uid === that.user.uid) {
           that.filteredTweetLists.push(doc.data())
         }
-        lists.push(doc.data())
+        that.tweetLists.push(doc.data())
       });
-      lists.forEach((list) => {
-      if (list.tweetIds.length === 1) {
-        const id = list.tweetIds[0]
-        firebase.db()
-            .collection('tweets')
-            .doc(String(id))
-            .get()
-            .then(doc => {
-              const tweetData = doc.data().tweet
-                that.listWithThumbnail.push({
-                  ...list,
-                  thumbnailImg: tweetData.entities.media && tweetData.entities.media.length > 0
-                    ? tweetData.entities.media[0].media_url
-                    : null,
-                  listColor: tweetData.user.profile_background_color
-                  })
-            })
-      } else {
-        for (const id of list.tweetIds) {
-          firebase.db()
-            .collection('tweets')
-            .doc(String(id))
-            .get()
-            .then(doc => {
-              if ( doc.data().tweet.entities.media 
-              && doc.data().tweet.entities.media.length > 0 ) {
-                const tweetData = doc.data().tweet
-                  that.listWithThumbnail.push({
-                    ...list,
-                    thumbnailImg: tweetData.entities.media && tweetData.entities.media.length > 0
-                      ? tweetData.entities.media[0].media_url
-                      : null,
-                    listColor: tweetData.user.profile_background_color
-                    })
-              }
-            })
-            break;
-        }
-      }
-    });
+
+    that.fetchList()
 });
   },
   methods: {
@@ -128,6 +82,36 @@ export default {
     changeDialogState(bool) {
       this.dialog = bool;
     },
+    async fetchList() {
+      const that = this
+      for (const list of this.tweetLists) {
+        that.isFound = false
+        if (list.tweetIds.length > 0) {
+          for (const id of list.tweetIds) {
+            if (!that.isFound) {
+              await firebase.db()
+              .collection('tweets')
+              .doc(String(id))
+              .get()
+              .then(doc => {
+                if ( (doc.data().tweet.entities.media && doc.data().tweet.entities.media.length > 0)
+                || list.tweetIds.length === list.tweetIds.indexOf(id) + 1 ) {
+                  const tweetData = doc.data().tweet
+                  that.listWithThumbnail.push({
+                    ...list,
+                    thumbnailImg: tweetData.entities.media && tweetData.entities.media.length > 0
+                      ? tweetData.entities.media[0].media_url
+                      : null,
+                    listColor: tweetData.user.profile_background_color
+                    })
+                    that.isFound = true
+                }
+              })
+            }
+          }
+        }
+      }
+    }
   }
 };
 </script>
