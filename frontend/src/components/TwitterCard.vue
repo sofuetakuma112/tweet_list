@@ -7,7 +7,7 @@
       <span class="title font-weight-light">Twitter</span>
     </v-card-title>
 
-    <v-card-text class="body-1 font-weight-bold">
+    <v-card-text class="text-md-body-1 text-caption font-weight-bold">
       {{ tweetText }}
       <TwitterImg :tweet="tweet" :key="tweet.id" />
     </v-card-text>
@@ -23,21 +23,27 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>{{ tweet.user.name }}</v-list-item-title>
+          <v-list-item-title
+            class="text-md-body-1 text-caption font-weight-bold"
+            >{{ tweet.user.name }}</v-list-item-title
+          >
         </v-list-item-content>
 
-        <v-row align="center" justify="end">
-          <v-icon class="mr-1" @click="saveList">
+        <v-row
+          align="center"
+          class="text-md-body-1 text-caption font-weight-bold "
+        >
+          <v-icon class="ml-2 mr-1" @click="saveList">
             mdi-plus
           </v-icon>
           <v-icon class="mr-1">
             mdi-heart
           </v-icon>
-          <span class="subheading mr-2">{{ tweet.favorite_count }}</span>
+          <span class="subheading mr-1">{{ tweet.favorite_count }}</span>
           <v-icon class="mr-1">
             mdi-share-variant
           </v-icon>
-          <span class="subheading">{{ tweet.retweet_count }}</span>
+          <span class="subheading ">{{ tweet.retweet_count }}</span>
         </v-row>
       </v-list-item>
     </v-card-actions>
