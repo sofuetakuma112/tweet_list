@@ -18,22 +18,25 @@
               class="rounded-lg"
             ></v-img>
             <v-overlay v-if="hover" absolute color="#1f1f1f">
-              <v-btn @click="showListDetails(list)" text class="font-weight-bold"
+              <v-btn
+                @click="showListDetails(list)"
+                text
+                class="font-weight-bold text-md-body-1 text-caption"
                 >See more list</v-btn
               >
             </v-overlay>
-            </v-card>
-          </v-hover>
-          <p class="text-center font-weight-medium my-md-4">
-            {{ list.listName }}
-          </p>
+          </v-card>
+        </v-hover>
+        <p class="text-center font-weight-medium my-md-4">
+          {{ list.listName }}
+        </p>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import firebase from '../firebase'
+import firebase from "../firebase";
 
 export default {
   data: () => ({
@@ -46,7 +49,7 @@ export default {
   }),
   computed: {
     user() {
-      return this.$store.getters.user
+      return this.$store.getters.user;
     }
   },
   created() {
@@ -111,7 +114,7 @@ export default {
           }
         }
       }
-    }
+    },
   }
 };
 </script>
