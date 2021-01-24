@@ -1,7 +1,12 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="4" md="3" v-for="(list, index) in filteredTweetLists" :key="index">
+      <v-col
+        cols="4"
+        md="3"
+        v-for="(list, index) in filteredTweetLists"
+        :key="index"
+      >
         <v-hover v-slot="{ hover }">
           <v-card
             class="tweet-list mx-md-10 my-md-2 rounded-lg"
@@ -18,22 +23,25 @@
               class="rounded-lg"
             ></v-img>
             <v-overlay v-if="hover" absolute color="#1f1f1f">
-              <v-btn @click="showListDetails(list)" text class="font-weight-bold"
+              <v-btn
+                @click="showListDetails(list)"
+                text
+                class="font-weight-bold text-md-body-1 text-caption"
                 >See more list</v-btn
               >
             </v-overlay>
-            </v-card>
-          </v-hover>
-          <p class="text-center font-weight-medium my-md-4">
-            {{ list.listName }}
-          </p>
+          </v-card>
+        </v-hover>
+        <p class="text-center font-weight-medium my-md-4">
+          {{ list.listName }}
+        </p>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import firebase from '../firebase'
+import firebase from "../firebase";
 
 export default {
   data: () => ({
@@ -48,25 +56,26 @@ export default {
     ],
     filteredTweetLists: [],
     isShowListDetails: false,
-    dialog: false,
+    dialog: false
   }),
   computed: {
     user() {
-      return this.$store.getters.user
+      return this.$store.getters.user;
     }
   },
   created() {
-    const that = this
-    firebase.db()
+    const that = this;
+    firebase
+      .db()
       .collection("tweet_lists")
       .get()
       .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        if (doc.data().uid === that.user.uid) {
-          that.filteredTweetLists.push(doc.data())
-        }
-    });
-});
+        querySnapshot.forEach(function(doc) {
+          if (doc.data().uid === that.user.uid) {
+            that.filteredTweetLists.push(doc.data());
+          }
+        });
+      });
   },
   methods: {
     showListDetails(list) {
@@ -82,7 +91,7 @@ export default {
     },
     changeDialogState(bool) {
       this.dialog = bool;
-    },
+    }
   }
 };
 </script>
