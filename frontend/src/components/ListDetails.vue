@@ -12,7 +12,7 @@
       </v-card>
     </template>
     <template v-else>
-      <div>
+      <div class="text-center pt-5">
         リストに追加されたツイートはありません
       </div>
     </template>

@@ -12,7 +12,7 @@
       @keyup.enter="searchTweet()"
     ></v-text-field>
 
-    <v-dialog v-model="search" width="65%">
+    <v-dialog v-model="search" width="80%">
       <template v-for="tweet in tweets">
         <TwitterCard :tweet="tweet" :key="tweet.id" @save-list="openSaveList" />
       </template>

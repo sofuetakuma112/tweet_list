@@ -10,26 +10,23 @@
       <v-divider></v-divider>
 
       <p class="pt-15 text-center">新規作成ファイル表示</p>
-      <div class="text-center">
-        <ValidationObserver
-            ref="observer"
-            v-slot="{ invalid }"
+      <div class="text-center list-name px-2">
+        <ValidationObserver ref="observer" v-slot="{ invalid }">
+          <ValidationProvider
+            v-slot="{ errors }"
+            name="Name"
+            rules="required|max:10"
           >
-            <ValidationProvider
-                v-slot="{ errors }"
-                name="Name"
-                rules="required|max:10"
-              >
-                <v-text-field
-                  v-model="name"
-                  :counter="10"
-                  :error-messages="errors"
-                  label="Name"
-                  required
-                  class="list-name"
-                ></v-text-field>
-              </ValidationProvider>
-              <!-- <ValidationProvider
+            <v-text-field
+              v-model="name"
+              :counter="10"
+              :error-messages="errors"
+              label="Name"
+              required
+              @keydown.enter="saveNewList"
+            ></v-text-field>
+          </ValidationProvider>
+          <!-- <ValidationProvider
                 v-slot="{ errors }"
                 rules="required"
                 name="checkbox"
@@ -44,14 +41,14 @@
                 ></v-checkbox>
               </ValidationProvider> -->
 
-              <v-btn
-                class="mr-4"
-                type="submit"
-                :disabled="invalid"
-                @click="saveNewList()"
-              >
-                作成
-              </v-btn>
+          <v-btn
+            class="mr-4"
+            type="submit"
+            :disabled="invalid"
+            @click="saveNewList"
+          >
+            作成
+          </v-btn>
         </ValidationObserver>
       </div>
     </v-card>
@@ -59,34 +56,38 @@
 </template>
 
 <script>
-import firebase from '../firebase'
+import firebase from "../firebase";
 
 export default {
   data: () => ({
     openCreateListForm: false,
-    name: '',
+    name: ""
   }),
   computed: {
     user() {
-      return this.$store.getters.user
+      return this.$store.getters.user;
     }
   },
   methods: {
     saveNewList() {
-      firebase.db().collection('tweet_lists').add({
-        uid: this.user.uid,
-        listName: this.name,
-        tweetIds: []
-      })
-      this.$emit('change-savenew', false);
-    },
+      if (event.keyCode !== 13) return;
+      firebase
+        .db()
+        .collection("tweet_lists")
+        .add({
+          uid: this.user.uid,
+          listName: this.name,
+          tweetIds: []
+        });
+      this.$emit("change-savenew", false);
+    }
   }
 };
 </script>
 
 <style>
 .list-name {
-  max-width: 500px;
+  max-width: 800px;
   margin: 0 auto;
 }
 </style>
