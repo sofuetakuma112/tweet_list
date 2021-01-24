@@ -13,6 +13,10 @@
     ></v-text-field>
 
     <v-dialog v-model="search" width="80%">
+      <v-card v-if="messagecheck" class="text-center title py-5"
+        >該当なし</v-card
+      >
+
       <template v-for="tweet in tweets">
         <TwitterCard :tweet="tweet" :key="tweet.id" @save-list="openSaveList" />
       </template>
@@ -33,6 +37,7 @@ export default {
   },
   data: () => ({
     message: "",
+    messagecheck: false,
     search: false,
     savelist: false,
     tweets: [],
@@ -51,11 +56,17 @@ export default {
           this.message.lastIndexOf("/") + 1,
           19
         );
+        if (this.message.length == 19 && !isNaN(this.message)) {
+          this.messagecheck = false;
+        } else {
+          this.messagecheck = true;
+        }
         this.post().then(tweetData => {
           this.tweets = tweetData.data.tweets;
         });
       }
     },
+
     async post() {
       let response = await Methods.fetchTweet(this.message);
       return response;
