@@ -1,19 +1,19 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="4" md="3" v-for="(list, index) in filteredTweetLists" :key="index">
+      <v-col cols="4" md="3" v-for="(list, index) in listWithThumbnail" :key="index">
         <v-hover v-slot="{ hover }">
           <v-card
             class="tweet-list mx-md-10 my-md-2 rounded-lg"
             height="256"
-            :color="randomColor()"
+            :color="`#${list.listColor}`"
             outlined
             :elevation="hover ? 12 : 4"
             style="cursor: pointer"
           >
             <v-img
-              v-if="list.img != ' '"
-              :src="list.img"
+              v-if="list.thumbnailImg != null"
+              :src="list.thumbnailImg"
               height="254px"
               class="rounded-lg"
             ></v-img>
@@ -49,6 +49,7 @@ export default {
     filteredTweetLists: [],
     isShowListDetails: false,
     dialog: false,
+    listWithThumbnail: [], // ごちゃまぜ
   }),
   computed: {
     user() {
@@ -57,14 +58,58 @@ export default {
   },
   created() {
     const that = this
+    const lists = []
+
     firebase.db()
       .collection("tweet_lists")
       .get()
       .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
+        // 自分が作ったリストのみ取得
         if (doc.data().uid === that.user.uid) {
           that.filteredTweetLists.push(doc.data())
         }
+        lists.push(doc.data())
+      });
+      lists.forEach((list) => {
+      if (list.tweetIds.length === 1) {
+        const id = list.tweetIds[0]
+        firebase.db()
+            .collection('tweets')
+            .doc(String(id))
+            .get()
+            .then(doc => {
+              const tweetData = doc.data().tweet
+                that.listWithThumbnail.push({
+                  ...list,
+                  thumbnailImg: tweetData.entities.media && tweetData.entities.media.length > 0
+                    ? tweetData.entities.media[0].media_url
+                    : null,
+                  listColor: tweetData.user.profile_background_color
+                  })
+            })
+      } else {
+        for (const id of list.tweetIds) {
+          firebase.db()
+            .collection('tweets')
+            .doc(String(id))
+            .get()
+            .then(doc => {
+              if ( doc.data().tweet.entities.media 
+              && doc.data().tweet.entities.media.length > 0 ) {
+                const tweetData = doc.data().tweet
+                  that.listWithThumbnail.push({
+                    ...list,
+                    thumbnailImg: tweetData.entities.media && tweetData.entities.media.length > 0
+                      ? tweetData.entities.media[0].media_url
+                      : null,
+                    listColor: tweetData.user.profile_background_color
+                    })
+              }
+            })
+            break;
+        }
+      }
     });
 });
   },
